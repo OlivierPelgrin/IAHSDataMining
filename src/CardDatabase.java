@@ -80,19 +80,25 @@ public class CardDatabase {
 	}
 	
 
-	public String formatOutput(String out) {
+	public String formatOutput(String out, int minSize) {
 		StringBuffer buffer = new StringBuffer();
 		String[] lines = out.split("\n");
 		for(String s1: lines) {
 			String[] line = s1.split("#SUP:");
 			String[] items = line[0].split(" ");
 			int support = Integer.parseInt(line[1].substring(1));
-			for(String s2: items) {
-				int tmpId = Integer.parseInt(s2);
-				String cardName = this.getCardById(tmpId);
-				buffer.append(cardName + " ");
+			if(items.length-1 >= minSize) {
+				for(String s2: items) {
+					int tmpId = Integer.parseInt(s2);
+					if(tmpId != -1) {
+						String cardName = this.getCardById(tmpId);
+						buffer.append(cardName + " ");
+					} else {
+						buffer.append(" | ");
+					}
+				}
+				buffer.append(" || SUPPORT : " + support + "\n");
 			}
-			buffer.append(" || SUPPORT : " + support + "\n");
 		}
 		return buffer.toString();
 	}

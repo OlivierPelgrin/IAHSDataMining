@@ -16,14 +16,26 @@ public class FileUtils {
 		return str;
 	}
 	
-	public static void writeItemSets(ArrayList<int[]> itemSets) throws IOException {
+	public static void writeItemSets(ArrayList<ItemSet> itemSets) throws IOException {
 		StringBuffer str = new StringBuffer();
 		for(int i=0; i<itemSets.size(); i++) {
-			int[] tmp = itemSets.get(i);
-			for(int j=0; j<tmp.length; j++) {
-				str.append(tmp[j] + " ");
-			}
+			ItemSet tmp = itemSets.get(i);
+			str.append(tmp.toString());
 			str.append("\n");
+		}
+		Path path = FileSystems.getDefault().getPath("input.txt");
+		if(Files.exists(path)){
+			Files.delete(path);
+		}
+		OutputStream os = Files.newOutputStream(path);
+		os.write(str.toString().getBytes());
+		os.close();
+	}
+	
+	public static void writeSequences(ArrayList<ItemSetSeq> sequences) throws IOException {
+		StringBuffer str = new StringBuffer();
+		for(ItemSetSeq iss: sequences) {
+			str.append(iss.toString() + "\n");
 		}
 		Path path = FileSystems.getDefault().getPath("input.txt");
 		if(Files.exists(path)){

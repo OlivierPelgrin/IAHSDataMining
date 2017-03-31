@@ -26,4 +26,25 @@ public class AlgorithmExecutor {
 		}
 	}
 	
+	public static void executeCloSpan(int supmin) throws IOException {
+		
+		Path out = FileSystems.getDefault().getPath("output.txt");
+		Path in = FileSystems.getDefault().getPath("input.txt");
+		
+		String cmd = "java -jar Ressources"+ File.separator +"spmf.jar run CloSpan "+in.toString()+" "+out.toString()+" "+supmin+"%";
+
+		if(Files.exists(out)) {
+			Files.delete(out);
+		}
+		
+		Runtime runtime = Runtime.getRuntime();
+		Process p = runtime.exec(cmd);
+		try {
+			p.waitFor();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 }

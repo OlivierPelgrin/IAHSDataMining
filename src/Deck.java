@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Deck {
 	
@@ -26,9 +25,12 @@ public class Deck {
 	public void addCard(String card) {
 		if(!cardDb.isHeroPower(card)) {
 			cardDb.addCard(card);
-			theDeck.add(card);
+			if(!theDeck.contains(card)) {
+				theDeck.add(card);
+			}			
 		}
 	}
+	
 	
 	public int getID() {
 		return id;
@@ -52,8 +54,8 @@ public class Deck {
 	}
 	
 	
-	public int[] toItemSet() {
-		int[] itemset = new int[theDeck.size()];
+	public ItemSet toItemSet() {
+		/*int[] itemset = new int[theDeck.size()];
 		int i = 0;
 		for(String s: theDeck) {
 			int tmp = cardDb.getCardId(s);
@@ -61,7 +63,8 @@ public class Deck {
 			i++;
 		}
 		Arrays.sort(itemset);
-		return itemset;
+		return itemset;*/
+		return new ItemSet(theDeck, cardDb);
 	}
 	
 }
